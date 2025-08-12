@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Afiliación ARL Bolívar — Prerregistro</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --verde:#00A54F;
+  --verde-2:#1b8b43;
+  --amarillo:#FFD700;
+  --blanco:#ffffff;
+  --gris-claro:#F5F6F8;
+  --gris:#E6E9EB;
+  --radius:14px;
+  --maxw:1000px;
+  --transition: 220ms cubic-bezier(.2,.9,.2,1);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background: linear-gradient(180deg,#fbfef8 0%, #ffffff 40%);
+  color:#222;
+  padding:28px 16px;
+  display:flex;
+  justify-content:center;
+  min-height:100vh;
+}
+
+/* CONTAINER */
+.container{
+  width:100%;
+  max-width:var(--maxw);
+  background:var(--blanco);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow: 0 16px 40px rgba(6, 30, 18, 0.06);
+  border:1px solid rgba(0,0,0,0.03);
+  overflow:hidden;
+}
+
+/* BANNER */
+.banner{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  padding:18px;
+  border-radius:12px;
+  background: linear-gradient(90deg, rgba(0,165,79,0.95), rgba(255,215,0,0.95));
+  color:#fff;
+  margin-bottom:18px;
+  position:relative;
+}
+.banner .left{display:flex;align-items:center;gap:14px}
+.banner h1{margin:0;font-size:1.25rem;font-weight:700}
+.banner p{margin:2px 0 0;font-size:0.95rem;opacity:.95}
+
+/* SVG LOGO WRAPPER */
+.logo-wrap{
+  width:76px;height:76px;border-radius:999px;display:grid;place-items:center;background:rgba(255,255,255,0.06);
+  position:relative;flex:0 0 76px;
+}
+.logo-svg{
+  width:58px;height:58px;border-radius:999px;background:var(--blanco);display:grid;place-items:center;z-index:4;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  transform:translateZ(0);
+}
+
+/* rotating soft light ring */
+.light-ring{
+  position:absolute;inset:0;pointer-events:none;display:grid;place-items:center;
+}
+.light-ring .ring{
+  width:86px;height:86px;border-radius:50%;
+  background: conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,0.12), rgba(255,255,255,0.02) 30%, rgba(0,0,0,0.0) 50%, rgba(255,255,255,0.07) 80%);
+  filter: blur(8px) contrast(120%);
+  opacity:.9;
+  animation: slow-rotate 12s linear infinite;
+}
+@keyframes slow-rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* PROGRESS */
+.progress-wrap{margin:12px 0 18px}
+.progress{
+  height:14px;
+  background:var(--gris);
+  border-radius:999px;
+  overflow:hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.progress .bar{
+  width:0%;
+  height:100%;
+  background: linear-gradient(90deg, var(--verde), var(--amarillo));
+  transition: width 520ms cubic-bezier(.2,.9,.2,1);
+}
+
+/* STEPS PILL (visible desktop) */
+.steps-row{display:flex;justify-content:space-between;margin-top:10px;gap:6px}
+.step-pill{font-size:12px;color:#777;padding:6px 8px;border-radius:999px;min-width:36px;text-align:center; background:transparent}
+.step-pill.active{color:var(--verde);font-weight:700}
+
+/* FORM LAYOUT */
+form{display:grid;gap:16px}
+.step{display:none;animation:fadeIn .18s ease}
+.step.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{
+  background:var(--gris-claro);
+  padding:16px;border-radius:12px;border:1px solid var(--gris);
+}
+
+/* INPUTS */
+label{display:block;font-size:14px;margin-bottom:6px;font-weight:600}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.col{flex:1;min-width:170px}
+
+.input, select, textarea{
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  background:var(--blanco);
+  font-size:14px;
+  transition: box-shadow var(--transition), border-color var(--transition), transform .06s ease;
+}
+.input:focus, select:focus, textarea:focus{
+  outline:none;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0,165,79,0.10);
+  border-color: var(--verde);
+}
+
+/* checkbox/radio style */
+.checkboxes{display:flex;flex-direction:column;gap:10px}
+.checkbox{display:flex;align-items:flex-start;gap:10px}
+.checkbox input{width:18px;height:18px;margin-top:4px}
+
+/* radios container */
+.radios{display:flex;gap:12px;flex-wrap:wrap}
+.radio{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid transparent;background:var(--blanco);min-width:150px;cursor:pointer}
+.radio:hover{box-shadow:0 8px 22px rgba(0,0,0,0.04);border-color:var(--gris)}
+
+/* tooltip */
+.tooltip{display:inline-flex;align-items:center;gap:8px}
+.info{width:20px;height:20px;border-radius:50%;display:inline-grid;place-items:center;font-size:12px;background:var(--verde);color:white;cursor:help;position:relative}
+.info .tooltip-text{position:absolute;bottom:36px;left:50%;transform:translateX(-50%) translateY(6px);background:var(--blanco);color:#222;border-radius:8px;padding:8px 12px;border:1px solid rgba(0,0,0,0.08);min-width:220px;box-shadow:0 10px 30px rgba(0,0,0,0.08);opacity:0;pointer-events:none;transition:all .12s ease}
+.info:hover .tooltip-text{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ACTIONS & BUTTONS */
+.actions{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:8px}
+.btn{padding:10px 16px;border-radius:10px;border:0;font-weight:700;cursor:pointer;box-shadow:0 8px 28px rgba(0,0,0,0.06);transition:transform .12s ease, box-shadow .12s ease}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;border:1px solid var(--gris);color:#333}
+.btn.primary{
+  background: linear-gradient(90deg,var(--verde), var(--amarillo));
+  color:#04261a;
+  box-shadow: 0 12px 30px rgba(0,165,79,0.12);
+}
+.btn.primary:hover{transform:translateY(-3px);box-shadow:0 20px 48px rgba(0,165,79,0.14)}
+
+/* summary */
+.summary{display:grid;gap:10px}
+.summary-item{display:flex;justify-content:space-between;padding:10px;border-radius:8px;background:#fff;border:1px solid var(--gris)}
+.muted{color:#666;font-size:13px}
+
+/* modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:120}
+.modal{background:var(--blanco);width:94%;max-width:980px;border-radius:12px;padding:16px;box-shadow:0 30px 60px rgba(0,0,0,0.18)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.modal-body{max-height:70vh;overflow:auto;padding-top:12px;line-height:1.45;color:#222}
+.modal-tabs{display:flex;gap:8px;margin-top:8px}
+.tab{padding:8px 12px;border-radius:8px;background:transparent;border:1px solid var(--gris);cursor:pointer}
+.tab.active{background:linear-gradient(90deg, rgba(0,165,79,0.08), rgba(255,215,0,0.06));border-color:var(--verde)}
+
+/* loader */
+.loader{display:none;margin:18px auto;border:6px solid #f3f3f3;border-top:6px solid var(--verde);border-radius:50%;width:44px;height:44px;animation: spin 1s linear infinite}
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+
+/* responsive */
+@media (max-width:820px){
+  .banner{flex-direction:row;gap:12px;padding:14px}
+  .logo-wrap{width:60px;height:60px}
+  .logo-svg{width:46px;height:46px}
+  .steps-row{display:none}
+  .actions{flex-direction:column-reverse;align-items:stretch}
+}
+</style>
+</head>
+<body>
+  <div class="container" role="main" aria-labelledby="title">
+    <!-- Banner -->
+    <div class="banner" role="banner">
+      <div class="left">
+        <div class="logo-wrap" aria-hidden>
+          <!-- Light ring (rotating) -->
+          <div class="light-ring" aria-hidden>
+            <div class="ring"></div>
+          </div>
+          <!-- Mocked SVG logo (simulado) -->
+          <div class="logo-svg" aria-hidden>
+            <svg viewBox="0 0 100 100" width="56" height="56" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo Seguros Bolívar simulado">
+              <defs>
+                <linearGradient id="g1" x1="0" x2="1">
+                  <stop offset="0" stop-color="#FFD700"/>
+                  <stop offset="1" stop-color="#FFB600"/>
+                </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="46" fill="url(#g1)"/>
+              <g transform="translate(18,16)" fill="#0B3A1A">
+                <path d="M28 16c0-8-12-8-12-8v48s12 0 12-8c0-5 0-8 0-32z" />
+                <path d="M44 10c-6-6-24-6-24-6v64c0 0 18 0 24-6 6-6 6-52 0-52z" opacity="0.95"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div>
+          <h1 id="title">Bienvenido al proceso de afiliación a la ARL Bolívar</h1>
+          <p class="lead">Por favor, sigue el paso a paso para completar tu solicitud</p>
+        </div>
+      </div>
+
+      <!-- small right area -->
+      <div style="margin-left:auto;color:#052916;font-weight:700">ARL Bolívar — Prerregistro</div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-wrap" aria-hidden>
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+        <div class="bar" id="progressBar"></div>
+      </div>
+      <div class="steps-row" id="stepsRow">
+        <div class="step-pill" data-step="1">1</div>
+        <div class="step-pill" data-step="2">2</div>
+        <div class="step-pill" data-step="3">3</div>
+        <div class="step-pill" data-step="4">4</div>
+        <div class="step-pill" data-step="5">5</div>
+        <div class="step-pill" data-step="6">6</div>
+        <div class="step-pill" data-step="7">7</div>
+        <div class="step-pill" data-step="8">8</div>
+        <div class="step-pill" data-step="9">9</div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <form id="form" novalidate>
+      <!-- STEP 1 -->
+      <section class="step active" data-step="1" aria-labelledby="s1-title">
+        <div class="card">
+          <h3 id="s1-title">Autorización de Tratamiento de Datos</h3>
+          <p class="small">Marca las casillas para autorizar el tratamiento de tus datos personales.</p>
+
+          <div class="checkboxes" style="margin-top:12px" id="authList">
+            <label class="checkbox">
+              <input type="checkbox" id="auth1" required>
+              <div><strong>Autorizo el tratamiento de mis datos personales</strong><div class="muted">Autorización para el tratamiento y manejo de datos personales necesarios para el trámite.</div></div>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" id="auth2" required>
+              <div><strong>Autorizo la transferencia de datos</strong><div class="muted">Autorizo la transferencia de datos a las entidades necesarias para la radicación.</div></div>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" id="auth3" required>
+              <div><strong>Autorizo el uso de mis datos para radicación</strong><div class="muted">Para efectos de radicación y confirmación de identidad ante la ARL.</div></div>
+            </label>
+          </div>
+
+          <div class="actions">
+            <div class="muted">Paso 1 de 9</div>
+            <div>
+              <button type="button" class="btn ghost" id="btnPrev" disabled>Anterior</button>
+              <button type="button" class="btn primary" id="btnNext1" disabled>Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" data-step="2" aria-labelledby="s2-title">
+        <div class="card">
+          <h3 id="s2-title">Afiliación actual a otra ARL</h3>
+          <p class="small">¿Actualmente estás afiliado a otra ARL como dependiente o independiente?</p>
+
+          <div class="radios" style="margin-top:12px" id="arlRadios">
+            <label class="radio" data-value="si"><input type="radio" name="otrasarl" value="si"> Sí</label>
+            <label class="radio" data-value="no"><input type="radio" name="otrasarl" value="no"> No</label>
+            <div style="align-self:center;margin-left:8px"><button type="button" class="btn ghost" id="viewDecree">Ver más información</button></div>
+          </div>
+
+          <div class="small" style="margin-top:12px;color:#444">Si seleccionas <strong>Sí</strong> no podrás continuar con el proceso. Revisa los artículos aplicables en los decretos mostrados.</div>
+
+          <div class="actions">
+            <div class="muted">Paso 2 de 9</div>
+            <div>
+              <button type="button" class="btn ghost" id="btnPrev2">Anterior</button>
+              <button type="button" class="btn primary" id="btnNext2" disabled>Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" data-step="3" aria-labelledby="s3-title">
+        <div class="card">
+          <h3 id="s3-title">Tipo de Cotizante</h3>
+          <p class="small">Bajo qué tipo de cotizante requiere afiliarse a la ARL</p>
+
+          <div class="radios" style="margin-top:12px" id="cotizanteRadios">
+            <label class="radio" data-value="1">
+              <input type="radio" name="cotizante" value="1"> Independiente Voluntario (57)
+              <span class="tooltip"><span class="info">i<span class="tooltip-text">Si realiza actividades laborales por cuenta propia y no tiene contrato de prestación de servicios.</span></span></span>
+            </label>
+            <label class="radio" data-value="2">
+              <input type="radio" name="cotizante" value="2"> Independiente por prestación de servicios (59)
+              <span class="tooltip"><span class="info">i<span class="tooltip-text">Si trabajas bajo contrato de prestación de servicios con una empresa o entidad.</span></span></span>
+            </label>
+          </div>
+
+          <div class="actions">
+            <div class="muted">Paso 3 de 9</div>
+            <div>
+              <button type="button" class="btn ghost" id="btnPrev3">Anterior</button>
+              <button type="button" class="btn primary" id="btnNext3" disabled>Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4.1 -->
+      <section class="step" data-step="4-1" aria-labelledby="s4-1-title">
+        <div class="card">
+          <h3 id="s4-1-title">Fecha inicial de vigencia (Independiente Voluntario)</h3>
+          <p class="small">Seleccione la fecha inicial de vigencia. No puede ser igual ni anterior al día actual.</p>
+
+          <div class="row" style="margin-top:8px">
+            <div class="col"><label>Fecha inicial</label><input class="input" type="date" id="fechaInitVol" /></div>
+          </div>
+
+          <div class="actions">
+            <div class="muted">Paso 4 de 9 (4.1)</div>
+            <div>
+              <button type="button" class="btn ghost" id="btnPrev4-1">Anterior</button>
+              <button type="button" class="btn primary" id="btnNext4-1" disabled>Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4.2 -->
+      <section class="step" data-step="4-2" aria-labelledby="s4-2-title">
+        <div class="card">
+          <h3 id="s4-2-title">Clase de Riesgo (Independiente por prestación)</h3>
+          <p class="small">Seleccione la clase de riesgo (1–5). Si selecciona 4 o 5, se permitirá vigencias menores a 30 días.</p>
+
+          <div style="margin-top:12px">
+            <label>Clase de Riesgo</label>
+            <select id="claseRiesgo" class="input"><option value="">Seleccionar</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+          </div>
+
+          <div class="actions">
+            <div class="muted">Paso 4 de 9 (4.2)</div>
+            <div>
+              <button type="button" class="btn ghost" id="btnPrev4-2">Anterior</button>
+              <button type="button" class="btn primary" id="btnNext4-2" disabled>Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4.3 -->
+      <section class="step" data-step="4-3" aria-labelledby="s4-3-title">
+        <div class="card">
+          <h3 id="s4-3-title">Fecha inicial y final de vigencia</h3>
+          <p class="small">Fecha inicial debe ser posterior a la actual. Fecha final mínimo 30 días después de la inicial (excepto riesgo 4 y 5).</p>
+
+          <div class="row" style="margin-top:8px">
+            <div class="col"><label>Fecha inicial</label><input class="input" type="date" id="fechaInit" /></div>
+            <div class="col"><label>Fecha final</label><input class="input" type="date" id="fechaFin" /></div>
+          </div>
+
+          <div class="actions">
+            <div class="muted">Paso 4 de 9 (4.3)</div>
+            <div>
+              <button type="button" class="btn ghost" id="btnPrev4-3">Anterior</button>
+              <button type="button" class="btn primary" id="btnNext4-3" disabled>Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section class="step" data-step="5" aria-labelledby="s5-title">
+        <div class="card">
+          <h3 id="s5-title">Identificación del empleador</h3>
+          <p class="small">Seleccione tipo de documento y número del empleador (solo números).</p>
+
+          <div class="row" style="margin-top:8px">
+            <div class="col"><label>Tipo de documento</label>
+              <select id="tipoDocEmple" class="input"><option value="">Seleccionar</option><option>Registro Civil</option><option>Cédula de Ciudadanía</option><option>Cédula de Extranjería</option><option>Carnet Diplomático</option><option>Salvoconducto</option><option>Permiso de Protección Temporal</option><option>NIT</option></select>
+            </div>
+            <div class="col"><label>Número de documento</label><input class="input" type="text" id="numDocEmple" inputmode="numeric" pattern="[0-9]*" /></div>
+          </div>
+
+          <div class="actions">
+            <div class="muted">Paso 5 de 9</div>
+            <div>
+              <button type="button" class="btn ghost" id="btnPrev5">Anterior</button>
+              <button type="button" class="btn primary" id="btnNext5" disabled>Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section class="step" data-step="6" aria-labelledby="s6-title">
+        <div class="card">
+          <h3 id="s6-title">Identificación del trabajador</h3>
+          <p class="small">Seleccione tipo de documento y número. Validamos longitud mínima esperada según tipo.</p>
+
+          <div class="row" style="margin-top:8px">
+            <div class="col"><label>Tipo de documento</label>
+              <select id="tipoDocTrab" class="input"><option value="">Seleccionar</option><option>Registro Civil</option><option>Cédula de Ciudadanía</option><option>Cédula de Extranjería</option><option>Carnet Diplomático</option><option>Salvoconducto</option><option>Permiso de Protección Temporal</option><option>Tarjeta de Identidad</option><option>NIT</option></select>
+            </div>
+            <div class="col"><label>Número de documento</label><input class="input" type="text" id="numDocTrab" inputmode="numeric" /><div class="small muted" id="docRuleHint">Reglas: el número debe ser numérico. Ajusta reglas específicas según el tipo de documento.</div></div>
+          </div>
+
+          <div class="actions">
+            <div class="muted">Paso 6 de 9</div>
+            <div>
+              <button type="button" class="btn ghost" id="btnPrev6">Anterior</button>
+              <button type="button" class="btn primary" id="btnNext6" disabled>Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section class="step" data-step="7" aria-labelledby="s7-title">
+        <div class="card">
+          <h3 id="s7-title">Datos básicos</h3>
+          <p class="small">Información de contacto del trabajador</p>
+
+          <div class="row" style="margin-top:8px">
+            <div class="col"><label>Nombre y Apellidos</label><input class="input" id="nombres" type="text" placeholder="Ej: Juan Pérez" /></div>
+            <div class="col"><label>Celular</label><input class="input" id="celular" type="tel" placeholder="3XXXXXXXXX" /></div>
+          </div>
+
+          <div class="row">
+            <div class="col"><label>Correo electrónico</label><input class="input" id="email" type="email" placeholder="ejemplo@correo.com" /></div>
+            <div class="col"><label>Confirmar correo</label><input class="input" id="email2" type="email" /></div>
+          </div>
+
+          <div class="actions">
+            <div class="muted">Paso 7 de 9</div>
+            <div>
+              <button type="button" class="btn ghost" id="btnPrev7">Anterior</button>
+              <button type="button" class="btn primary" id="btnNext7" disabled>Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 8 -->
+      <section class="step" data-step="8" aria-labelledby="s8-title">
+        <div class="card">
+          <h3 id="s8-title">Confirmación de datos</h3>
+          <p class="small">Revisa y edita cualquier dato antes de enviar.</p>
+
+          <div class="summary" id="summaryBox" style="margin-top:12px"></div>
+
+          <div class="actions">
+            <div class="muted">Paso 8 de 9</div>
+            <div>
+              <button type="button" class="btn ghost" id="btnPrev8">Anterior</button>
+              <button type="button" class="btn primary" id="btnNext8">Enviar prerregistro</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 9 -->
+      <section class="step" data-step="9" aria-labelledby="s9-title">
+        <div class="card" style="text-align:center">
+          <h3 id="s9-title">Finalización</h3>
+          <p class="small">Una vez complete el formulario, recibirá un correo para continuar con el proceso de radicación y confirmar identidad.</p>
+
+          <div style="margin-top:18px; display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+            <button type="button" id="btnEnviar" class="btn primary">Enviar prerregistro</button>
+            <button type="button" id="btnValidar" class="btn ghost">Validar identidad</button>
+          </div>
+
+          <div class="actions" style="margin-top:18px">
+            <div></div>
+            <div><button type="button" class="btn ghost" id="btnPrev9">Anterior</button></div>
+          </div>
+        </div>
+      </section>
+    </form>
+  </div>
+
+  <!-- Modal for Decrees -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal" role="document" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h3 id="modalTitle">Decreto 100 de 2012 — Decreto 723 de 2013</h3>
+        <div><button class="close" id="modalClose" aria-label="Cerrar">✕</button></div>
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center;margin-top:8px" class="modal-tabs">
+        <button class="tab active" data-pdf="d100">Decreto 100 de 2012</button>
+        <button class="tab" data-pdf="d723">Decreto 723 de 2013</button>
+        <a id="openNew" class="tab" style="margin-left:auto;text-decoration:none;color:var(--verde)">Abrir en nueva pestaña</a>
+      </div>
+
+      <div class="modal-body" id="modalBody">
+        <div id="pdfHolder" style="width:100%;height:62vh;border-radius:8px;overflow:hidden;border:1px solid var(--gris)">
+          <iframe id="iframeD100" src="" style="width:100%;height:100%;border:0;display:none"></iframe>
+          <iframe id="iframeD723" src="" style="width:100%;height:100%;border:0;display:none"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* =============
+   CONFIG
+   ============= */
+const WEBHOOK_URL = "https://app.automy.com/webhook/tu-id"; // <-- reemplaza por tu webhook real
+const PDF_DECRETO_100 = "https://www.minsalud.gov.co/Normatividad_Nuevo/Decreto%200100%20de%202012.pdf";
+const PDF_DECRETO_723 = "https://colaboracion.dnp.gov.co/CDT/Normograma/Decreto%200723%20de%202013.pdf";
+
+/* =============
+   UTIL UI
+   ============= */
+const steps = Array.from(document.querySelectorAll('.step'));
+const stepPills = Array.from(document.querySelectorAll('.step-pill'));
+const progressBar = document.getElementById('progressBar');
+
+function mapToLogical(key){
+  const m = {'1':1,'2':2,'3':3,'4-1':4,'4-2':4,'4-3':4,'5':5,'6':6,'7':7,'8':8,'9':9};
+  return m[key] || 1;
+}
+function showStepByKey(key){
+  steps.forEach(s=> s.classList.toggle('active', s.dataset.step === key));
+  const logical = mapToLogical(key);
+  const percent = Math.round(((logical-1)/(9-1))*100);
+  progressBar.style.width = percent + '%';
+  stepPills.forEach(p=> p.classList.toggle('active', Number(p.dataset.step) === logical));
+  document.querySelector('.progress').setAttribute('aria-valuenow', percent);
+}
+showStepByKey('1');
+
+/* =============
+   STEP 1
+   ============= */
+const auth1 = document.getElementById('auth1');
+const auth2 = document.getElementById('auth2');
+const auth3 = document.getElementById('auth3');
+const btnNext1 = document.getElementById('btnNext1');
+[auth1,auth2,auth3].forEach(el=> el.addEventListener('change', ()=> { btnNext1.disabled = !(auth1.checked && auth2.checked && auth3.checked); }));
+btnNext1.addEventListener('click', ()=> showStepByKey('2'));
+
+/* Prev global */
+document.getElementById('btnPrev').addEventListener('click', ()=> showStepByKey('1'));
+
+/* =============
+   STEP 2
+   ============= */
+const arlRadios = document.getElementsByName('otrasarl');
+const btnPrev2 = document.getElementById('btnPrev2');
+const btnNext2 = document.getElementById('btnNext2');
+const viewDecree = document.getElementById('viewDecree');
+
+function enableNext2(){ btnNext2.disabled = !Array.from(arlRadios).some(r=>r.checked); }
+Array.from(arlRadios).forEach(r=> r.addEventListener('change', enableNext2));
+btnPrev2.addEventListener('click', ()=> showStepByKey('1'));
+btnNext2.addEventListener('click', ()=> {
+  const sel = Array.from(arlRadios).find(r=>r.checked);
+  if(!sel) return;
+  if(sel.value === 'si'){ alert("Si ya tiene una afiliación vigente no podrá continuar con el proceso.\n\nConsulte el Decreto completo."); openModal(); return; }
+  showStepByKey('3');
+});
+
+/* modal */
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalClose = document.getElementById('modalClose');
+const iframeD100 = document.getElementById('iframeD100');
+const iframeD723 = document.getElementById('iframeD723');
+const tabButtons = Array.from(document.querySelectorAll('.tab'));
+const openNew = document.getElementById('openNew');
+
+function openModal(){ modalBackdrop.style.display = 'flex'; modalBackdrop.setAttribute('aria-hidden','false'); showPDF('d100'); }
+function closeModal(){ modalBackdrop.style.display = 'none'; modalBackdrop.setAttribute('aria-hidden','true'); }
+viewDecree.addEventListener('click', openModal);
+modalClose.addEventListener('click', closeModal);
+modalBackdrop.addEventListener('click', (e)=>{ if(e.target === modalBackdrop) closeModal(); });
+
+tabButtons.forEach(btn=> btn.addEventListener('click', ()=> { tabButtons.forEach(b=>b.classList.remove('active')); btn.classList.add('active'); showPDF(btn.dataset.pdf); }));
+function showPDF(which){
+  if(which === 'd100'){ iframeD100.src = PDF_DECRETO_100; iframeD723.src = ''; iframeD100.style.display='block'; iframeD723.style.display='none'; openNew.href = PDF_DECRETO_100; }
+  else { iframeD723.src = PDF_DECRETO_723; iframeD100.src = ''; iframeD100.style.display='none'; iframeD723.style.display='block'; openNew.href = PDF_DECRETO_723; }
+  openNew.setAttribute('target','_blank');
+}
+
+/* =============
+   STEP 3
+   ============= */
+const cotRadios = document.getElementsByName('cotizante');
+const btnNext3 = document.getElementById('btnNext3');
+const btnPrev3 = document.getElementById('btnPrev3');
+function updateNext3(){ btnNext3.disabled = !Array.from(cotRadios).some(r=>r.checked) }
+Array.from(cotRadios).forEach(r=> r.addEventListener('change', updateNext3));
+btnPrev3.addEventListener('click', ()=> showStepByKey('2'));
+btnNext3.addEventListener('click', ()=> { const sel = Array.from(cotRadios).find(r=>r.checked); if(!sel) return; if(sel.value==='1') showStepByKey('4-1'); else showStepByKey('4-2'); });
+
+/* =============
+   STEP 4-1
+   ============= */
+const fechaInitVol = document.getElementById('fechaInitVol');
+const btnNext4_1 = document.getElementById('btnNext4-1');
+const btnPrev4_1 = document.getElementById('btnPrev4-1');
+function validateFechaAfterToday(inputEl){ if(!inputEl.value) return false; const now=new Date(); const sel=new Date(inputEl.value+'T00:00:00'); const today=new Date(now.getFullYear(), now.getMonth(), now.getDate()); return sel>today; }
+fechaInitVol.addEventListener('change', ()=> btnNext4_1.disabled = !validateFechaAfterToday(fechaInitVol));
+btnPrev4_1.addEventListener('click', ()=> showStepByKey('3'));
+btnNext4_1.addEventListener('click', ()=> showStepByKey('4-3'));
+
+/* =============
+   STEP 4-2
+   ============= */
+const claseRiesgo = document.getElementById('claseRiesgo');
+const btnNext4_2 = document.getElementById('btnNext4-2');
+const btnPrev4_2 = document.getElementById('btnPrev4-2');
+claseRiesgo.addEventListener('change', ()=> btnNext4_2.disabled = !claseRiesgo.value);
+btnPrev4_2.addEventListener('click', ()=> showStepByKey('3'));
+btnNext4_2.addEventListener('click', ()=> showStepByKey('4-3'));
+
+/* =============
+   STEP 4-3
+   ============= */
+const fechaInit = document.getElementById('fechaInit');
+const fechaFin = document.getElementById('fechaFin');
+const btnNext4_3 = document.getElementById('btnNext4-3');
+const btnPrev4_3 = document.getElementById('btnPrev4-3');
+function validateDates(){
+  if(!fechaInit.value || !fechaFin.value) return false;
+  const init=new Date(fechaInit.value+'T00:00:00'); const fin=new Date(fechaFin.value+'T00:00:00');
+  const today=new Date(); const today0=new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  if(!(init>today0)) return false;
+  let minDays=30; if(claseRiesgo.value==='4' || claseRiesgo.value==='5') minDays=0;
+  const diffDays = Math.round((fin-init)/(1000*60*60*24));
+  if(diffDays < minDays) return false; return true;
+}
+fechaInit.addEventListener('change', ()=> btnNext4_3.disabled = !validateDates());
+fechaFin.addEventListener('change', ()=> btnNext4_3.disabled = !validateDates());
+btnPrev4_3.addEventListener('click', ()=> { if(claseRiesgo.value) showStepByKey('4-2'); else showStepByKey('4-1'); });
+btnNext4_3.addEventListener('click', ()=> { if(!validateDates()){ alert('La fecha ingresada no es válida'); return; } showStepByKey('5'); });
+
+/* =============
+   STEP 5
+   ============= */
+const tipoDocEmple = document.getElementById('tipoDocEmple');
+const numDocEmple = document.getElementById('numDocEmple');
+const btnNext5 = document.getElementById('btnNext5');
+const btnPrev5 = document.getElementById('btnPrev5');
+function validateEmple(){ if(!tipoDocEmple.value) return false; const n=(numDocEmple.value||'').trim(); if(!/^\d+$/.test(n)) return false; if(n.length<6) return false; return true; }
+tipoDocEmple.addEventListener('change', ()=> btnNext5.disabled = !validateEmple());
+numDocEmple.addEventListener('input', ()=> { numDocEmple.value = numDocEmple.value.replace(/[^\d]/g,''); btnNext5.disabled = !validateEmple() });
+btnPrev5.addEventListener('click', ()=> showStepByKey('4-3'));
+btnNext5.addEventListener('click', ()=> showStepByKey('6'));
+
+/* =============
+   STEP 6
+   ============= */
+const tipoDocTrab = document.getElementById('tipoDocTrab');
+const numDocTrab = document.getElementById('numDocTrab');
+const btnNext6 = document.getElementById('btnNext6');
+const btnPrev6 = document.getElementById('btnPrev6');
+const docRuleHint = document.getElementById('docRuleHint');
+function validationRuleFor(type, number){
+  if(!number || !/^\d+$/.test(number)) return {ok:false,msg:'El número debe ser numérico.'};
+  const len = number.length;
+  switch(type){
+    case 'Registro Civil': return {ok: len >= 6, msg:'Registro Civil: mínimo 6 dígitos.'};
+    case 'Cédula de Ciudadanía': return {ok: len >= 6 && len <= 10, msg:'Cédula: 6–10 dígitos.'};
+    case 'Cédula de Extranjería': return {ok: len >= 6 && len <= 12, msg:'Cédula Extranjería: 6–12 dígitos.'};
+    case 'Carnet Diplomático': return {ok: len >= 6, msg:'Carnet Diplomático: mínimo 6 dígitos.'};
+    case 'Salvoconducto': return {ok: len >= 6, msg:'Salvoconducto: mínimo 6 dígitos.'};
+    case 'Permiso de Protección Temporal': return {ok: len >= 6, msg:'PPT: mínimo 6 dígitos.'};
+    case 'Tarjeta de Identidad': return {ok: len >= 6 && len <= 10, msg:'Tarjeta de Identidad: 6–10 dígitos.'};
+    case 'NIT': return {ok: len >= 6 && len <= 12, msg:'NIT: típico 9–12 dígitos.'};
+    default: return {ok:false,msg:'Seleccione un tipo de documento.'};
+  }
+}
+function updateNext6(){ const t = tipoDocTrab.value; const n = numDocTrab.value.trim(); const res = validationRuleFor(t,n); if(!t){ btnNext6.disabled = true; docRuleHint.textContent = 'Seleccione el tipo de documento.'; return; } docRuleHint.textContent = res.msg; btnNext6.disabled = !res.ok; }
+tipoDocTrab.addEventListener('change', updateNext6);
+numDocTrab.addEventListener('input', ()=> { numDocTrab.value = numDocTrab.value.replace(/[^\d]/g,''); updateNext6(); });
+btnPrev6.addEventListener('click', ()=> showStepByKey('5'));
+btnNext6.addEventListener('click', ()=> { const res = validationRuleFor(tipoDocTrab.value, numDocTrab.value.trim()); if(!res.ok){ alert('El tipo o número de identificación del trabajador es inválido'); return; } showStepByKey('7'); });
+
+/* =============
+   STEP 7
+   ============= */
+const nombres = document.getElementById('nombres');
+const celular = document.getElementById('celular');
+const email = document.getElementById('email');
+const email2 = document.getElementById('email2');
+const btnNext7 = document.getElementById('btnNext7');
+const btnPrev7 = document.getElementById('btnPrev7');
+function validateEmail(e){ return /\S+@\S+\.\S+/.test(e) }
+function validateCel(num){ return /^\s*3\d{9}\s*$/.test(num) }
+function updateNext7(){ const ok = nombres.value.trim().length > 3 && validateEmail(email.value) && email.value.trim() === email2.value.trim() && validateCel(celular.value); btnNext7.disabled = !ok; }
+[nombres,celular,email,email2].forEach(i=>i.addEventListener('input', updateNext7));
+btnPrev7.addEventListener('click', ()=> showStepByKey('6'));
+btnNext7.addEventListener('click', ()=> { if(!validateEmail(email.value) || email.value.trim() !== email2.value.trim()){ alert('El correo es inválido o no coincide'); return; } if(!validateCel(celular.value)){ alert('El celular debe tener 10 dígitos y comenzar con 3'); return; } buildSummary(); showStepByKey('8'); });
+
+/* =============
+   STEP 8
+   ============= */
+const summaryBox = document.getElementById('summaryBox');
+const btnPrev8 = document.getElementById('btnPrev8');
+const btnNext8 = document.getElementById('btnNext8');
+function buildSummary(){
+  const items = [];
+  items.push(['Autorizaciones', (auth1.checked && auth2.checked && auth3.checked) ? 'Sí' : 'No']);
+  const arlSel = Array.from(arlRadios).find(r=>r.checked);
+  items.push(['Afiliado otra ARL', arlSel ? (arlSel.value==='si' ? 'Sí' : 'No') : '']);
+  const cot = Array.from(cotRadios).find(r=>r.checked);
+  items.push(['Tipo de cotizante', cot ? (cot.value==='1' ? 'Independiente Voluntario' : 'Independiente por prestación de servicios') : '']);
+  items.push(['Clase de riesgo', claseRiesgo.value || '-']);
+  items.push(['Fecha inicial (vol/serv)', fechaInitVol.value || fechaInit.value || '-']);
+  items.push(['Fecha final', fechaFin.value || '-']);
+  items.push(['Empleador - Tipo', tipoDocEmple.value || '-']);
+  items.push(['Empleador - Número', numDocEmple.value || '-']);
+  items.push(['Trabajador - Tipo', tipoDocTrab.value || '-']);
+  items.push(['Trabajador - Número', numDocTrab.value || '-']);
+  items.push(['Nombres', nombres.value || '-']);
+  items.push(['Celular', celular.value || '-']);
+  items.push(['Correo', email.value || '-']);
+  summaryBox.innerHTML = '';
+  items.forEach(it=>{ const row=document.createElement('div'); row.className='summary-item'; row.innerHTML = `<div style="font-weight:600">${it[0]}</div><div class="muted">${it[1]}</div>`; summaryBox.appendChild(row); });
+}
+btnPrev8.addEventListener('click', ()=> showStepByKey('7'));
+btnNext8.addEventListener('click', async ()=> { const payload = collectPayload(); await submitToWebhook(payload); });
+
+/* =============
+   STEP 9
+   ============= */
+const btnPrev9 = document.getElementById('btnPrev9');
+const btnEnviar = document.getElementById('btnEnviar');
+const btnValidar = document.getElementById('btnValidar');
+btnPrev9.addEventListener('click', ()=> showStepByKey('8'));
+btnEnviar.addEventListener('click', async ()=> { const payload = collectPayload(); await submitToWebhook(payload); });
+btnValidar.addEventListener('click', ()=> alert('Inicia tu radicación en la ARL Bolívar (simulado).'));
+
+/* =============
+   PAYLOAD
+   ============= */
+function collectPayload(){
+  return {
+    autorizaciones: { autorizo_tratamiento: !!auth1.checked, autorizo_transferencia: !!auth2.checked, autorizo_radicar: !!auth3.checked },
+    afiliado_otra_arl: (Array.from(arlRadios).find(r=>r.checked)?.value) || null,
+    tipo_cotizante: (Array.from(cotRadios).find(r=>r.checked)?.value) || null,
+    clase_riesgo: claseRiesgo.value || null,
+    fecha_inicial_vol: fechaInitVol.value || null,
+    fecha_inicial: fechaInit.value || null,
+    fecha_final: fechaFin.value || null,
+    empleador: { tipo_documento: tipoDocEmple.value || null, numero: numDocEmple.value || null },
+    trabajador: { tipo_documento: tipoDocTrab.value || null, numero: numDocTrab.value || null, nombres: nombres.value || null, celular: celular.value || null, correo: email.value || null },
+    meta: { enviado_desde: 'form-afiliacion-arl-bolivar-v2-fixed', fecha_envio: new Date().toISOString() }
+  };
+}
+
+/* =============
+   SUBMIT TO WEBHOOK
+   ============= */
+async function submitToWebhook(payload){
+  // loader element (append if not exists)
+  let loader = document.querySelector('.loader');
+  if(!loader){
+    loader = document.createElement('div'); loader.className='loader';
+    document.querySelector('.container').appendChild(loader);
+  }
+  loader.style.display = 'block';
+  try{
+    const res = await fetch(WEBHOOK_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    if(res.ok){
+      alert('Prerregistro enviado correctamente. Revisa tu correo para continuar con el proceso.');
+      showStepByKey('9');
+    } else {
+      const text = await res.text().catch(()=>null);
+      alert('Error al enviar el formulario. Código: ' + res.status + (text ? '\n' + text : ''));
+    }
+  } catch(err){
+    alert('No fue posible conectar con el webhook. Revisa la URL o tu conexión.\n' + (err.message || err));
+  } finally {
+    loader.style.display = 'none';
+  }
+}
+
+/* =============
+   INIT & WIRING
+   ============= */
+(function init(){
+  // wire prev buttons not already wired
+  const mapPrev = {
+    'btnPrev3':'2','btnPrev4-1':'3','btnPrev4-2':'3','btnPrev4-3':'3',
+    'btnPrev5':'4-3','btnPrev6':'5','btnPrev7':'6','btnPrev8':'7','btnPrev9':'8'
+  };
+  Object.keys(mapPrev).forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('click', ()=> showStepByKey(mapPrev[id]));
+  });
+
+  // initial disabled states
+  ['btnNext1','btnNext2','btnNext3','btnNext4-1','btnNext4-2','btnNext4-3','btnNext5','btnNext6','btnNext7'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.disabled = true;
+  });
+
+  // allow clicking step pills only to previous steps
+  stepPills.forEach(p=>{
+    p.addEventListener('click', ()=> {
+      const target = Number(p.dataset.step);
+      const currentPill = stepPills.find(pp=>pp.classList.contains('active'));
+      const current = currentPill ? Number(currentPill.dataset.step) : 1;
+      if(target <= current) showStepByKey(String(target));
+      else alert('No es posible saltar pasos. Avanza en orden.');
+    });
+  });
+})();
+</script>
+</body>
+</html>
